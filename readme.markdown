@@ -1,11 +1,12 @@
 Notifier.js
 =====
-Javascript library for Gnome / Growl type non-blocking notifications. Jquery required.
+Javascript library for Gnome / Growl type non-blocking notifications. This version does not require jQuery, but also does not support older versions of IE.
+
 
 Links
 =====
 * [Demo](http://opensource.srirangan.net/notifier.js/)
-* [Download](https://github.com/downloads/Srirangan/notifer.js/notifier.js.zip)
+* [Download](https://github.com/tellnes/notifer.js/zipball/standalone)
 
 Usage Guide
 =====
@@ -14,10 +15,9 @@ The master branch may be unstable from time to time. Use the downloadable archiv
 
 Hack away, experiment on the master branch. Feel free to clone, fork and send pull requests.
 
-Include Jquery and Notifier.js
+Include Notifier.js
 -----
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="notifier.js"></script>
 
 Trigger Notifications
