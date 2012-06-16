@@ -1,5 +1,9 @@
 (function(){
 
+  var Notifier = {}
+  if (typeof module !== 'undefined' && module.exports) module.exports = Notifier
+  else window.Notifier = Notifier
+
   function setStyle(element, styles) {
     var elementStyle = element.style
     for (var property in styles) elementStyle[property] = styles[property]
@@ -28,7 +32,7 @@
     element.addEventListener(type, handle, false)
   }
 
-  var config = window.NotifierjsConfig = {
+  var config = {
     defaultTimeOut: 5000,
     position: ["top", "right"],
     notificationStyles: {
@@ -48,6 +52,7 @@
     },
     container: createElement('div')
   };
+  Notifier.config = config
 
   var initialized = false
   function init() {
@@ -68,7 +73,6 @@
   addEvent(document, 'DOMContentLoaded', init)
   addEvent(window, 'load', init)
 
-  var Notifier = window.Notifier = {};
 
   function getNotificationElement() {
     var elm = createElement('div', config.notificationStyles)
