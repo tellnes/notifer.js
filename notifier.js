@@ -131,10 +131,10 @@
       element.appendChild(iconElement)
     }
 
-    var textElement = createElement(textElement,  { display: 'inline-block'
-                                                  , verticalAlign: 'middle'
-                                                  , padding: '0 12px'
-                                                  })
+    var textElement = createElement('div',  { display: 'inline-block'
+                                            , verticalAlign: 'middle'
+                                            , padding: '0 12px'
+                                            })
 
     if (title) {
       var titleElement = createElement('div', {'font-weight': 'bold'})
