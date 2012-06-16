@@ -27,6 +27,12 @@
         cb(element)
       }
     }, 50)
+
+    return {
+      cancel: function() {
+        clearInterval(interval)
+      }
+    }
   }
   function addEvent(element, type, handle) {
     element.addEventListener(type, handle, false)
@@ -74,26 +80,41 @@
   addEvent(window, 'load', init)
 
 
-  function getNotificationElement() {
-    var elm = createElement('div', config.notificationStyles)
-
-    addEvent(elm, 'mouseover', function(event) {
-      setStyle(elm, config.notificationStylesHover)
-    }, false)
-
-    addEvent(elm, 'mouseout', function(event) {
-      setStyle(elm, config.notificationStyles)
-    }, false)
-
-    return elm
-  }
-
-
-
   Notifier.notify = function(message, title, iconUrl, timeOut) {
-    var notificationElement = getNotificationElement();
 
-    timeOut = timeOut || config.defaultTimeOut;
+    var element = createElement('div', config.notificationStyles)
+      , effect
+      , timedOut = false
+
+    function remove() {
+      effect = fadeOut(element, 400, function() {
+        if (element.parentNode) element.parentNode.removeChild(element)
+        effect = null
+      })
+    }
+
+    setTimeout(function() {
+      timedOut = true
+    }, timeOut || config.defaultTimeOut)
+
+    addEvent(element, 'mouseover', function(event) {
+      if (effect) {
+        effect.cancel()
+        effect = null
+      }
+      setStyle(element, config.notificationStylesHover)
+    }, false)
+
+    addEvent(element, 'mouseout', function(event) {
+      setStyle(element, config.notificationStyles)
+      if (timedOut) remove()
+    }, false)
+
+    addEvent(element, 'click', function() {
+      setStyle(element, {display: 'none'})
+    })
+
+
 
     if (iconUrl) {
       var iconElement = createElement('img',  { width: 36
@@ -103,7 +124,7 @@
                                               })
 
       iconElement.src = iconUrl
-      notificationElement.appendChild(iconElement)
+      element.appendChild(iconElement)
     }
 
     var textElement = createElement(textElement,  { display: 'inline-block'
@@ -123,18 +144,9 @@
       textElement.appendChild(messageElement)
     }
 
-    setTimeout(function() {
-      fadeOut(notificationElement, 400, function() {
-        if (notificationElement.parentNode) notificationElement.parentNode.removeChild(notificationElement)
-      })
-    }, timeOut)
 
-    notificationElement.addEventListener('click', function() {
-      setStyle(notificationElement, {display: 'none'})
-    })
-
-    notificationElement.appendChild(textElement)
-    config.container.insertBefore(notificationElement, config.container.firstChild)
+    element.appendChild(textElement)
+    config.container.insertBefore(element, config.container.firstChild)
   }
 
   Notifier.info = function(message, title) {
