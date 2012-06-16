@@ -121,8 +121,8 @@
 
 
     if (iconUrl) {
-      var iconElement = createElement('img',  { width: 36
-                                              , height: 36
+      var iconElement = createElement('img',  { width: '36px'
+                                              , height: '36px'
                                               , display: "inline-block"
                                               , verticalAlign: "middle"
                                               })
