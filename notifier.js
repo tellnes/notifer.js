@@ -134,6 +134,7 @@
     var textElement = createElement('div',  { display: 'inline-block'
                                             , verticalAlign: 'middle'
                                             , padding: '0 12px'
+                                            , width: '240px'
                                             })
 
     if (title) {
