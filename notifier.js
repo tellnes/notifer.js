@@ -85,6 +85,7 @@
     var element = createElement('div', config.notificationStyles)
       , effect
       , timedOut = false
+      , hover = false
 
     function remove() {
       effect = fadeOut(element, 400, function() {
@@ -95,6 +96,7 @@
 
     setTimeout(function() {
       timedOut = true
+      if (!hover) remove()
     }, timeOut || config.defaultTimeOut)
 
     addEvent(element, 'mouseover', function(event) {
@@ -103,11 +105,13 @@
         effect = null
       }
       setStyle(element, config.notificationStylesHover)
+      hover = true
     }, false)
 
     addEvent(element, 'mouseout', function(event) {
       setStyle(element, config.notificationStyles)
       if (timedOut) remove()
+      hover = false
     }, false)
 
     addEvent(element, 'click', function() {
